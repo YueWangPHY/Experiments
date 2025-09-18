@@ -1,6 +1,6 @@
 import React from 'react';
 
-const BudgetSummary = ({ budget, totalExpenses, remainingBudget }) => {
+const BudgetSummary = ({ budget, totalExpenses, remainingBudget, onEditBudget }) => {
   const percentageUsed = budget > 0 ? (totalExpenses / budget) * 100 : 0;
   const isOverBudget = remainingBudget < 0;
 
@@ -8,7 +8,16 @@ const BudgetSummary = ({ budget, totalExpenses, remainingBudget }) => {
     <div className="budget-summary">
       <div className="summary-cards">
         <div className="summary-card budget-card">
-          <h3>Total Budget</h3>
+          <div className="budget-header">
+            <h3>Total Budget</h3>
+            <button 
+              className="edit-budget-button"
+              onClick={onEditBudget}
+              title="Edit Budget"
+            >
+              ✏️
+            </button>
+          </div>
           <p className="amount budget-amount">${budget.toFixed(2)}</p>
         </div>
         

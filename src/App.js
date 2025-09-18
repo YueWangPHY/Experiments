@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import BudgetInput from './components/BudgetInput';
 import BudgetSummary from './components/BudgetSummary';
+import BudgetEditModal from './components/BudgetEditModal';
 import ExpenseForm from './components/ExpenseForm';
 import ExpenseList from './components/ExpenseList';
 
@@ -8,6 +9,7 @@ function App() {
   const [budget, setBudget] = useState(0);
   const [expenses, setExpenses] = useState([]);
   const [isBudgetSet, setIsBudgetSet] = useState(false);
+  const [isEditModalOpen, setIsEditModalOpen] = useState(false);
 
   // Load data from localStorage on component mount
   useEffect(() => {
@@ -29,6 +31,20 @@ function App() {
     setBudget(newBudget);
     setIsBudgetSet(true);
     localStorage.setItem('budget', newBudget.toString());
+  };
+
+  // Handle budget editing
+  const handleEditBudget = () => {
+    setIsEditModalOpen(true);
+  };
+
+  const handleSaveBudget = (newBudget) => {
+    setBudget(newBudget);
+    localStorage.setItem('budget', newBudget.toString());
+  };
+
+  const handleCloseModal = () => {
+    setIsEditModalOpen(false);
   };
 
   // Add new expense
@@ -69,7 +85,8 @@ function App() {
             <BudgetSummary 
               budget={budget} 
               totalExpenses={totalExpenses} 
-              remainingBudget={remainingBudget} 
+              remainingBudget={remainingBudget}
+              onEditBudget={handleEditBudget}
             />
             
             <div className="expense-section">
@@ -81,6 +98,13 @@ function App() {
             </div>
           </div>
         )}
+        
+        <BudgetEditModal
+          isOpen={isEditModalOpen}
+          onClose={handleCloseModal}
+          currentBudget={budget}
+          onSave={handleSaveBudget}
+        />
       </main>
     </div>
   );
