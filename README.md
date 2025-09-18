@@ -1,5 +1,7 @@
 # Financial Tracker
 
+Wrote by curosr 100%
+
 A modern React-based financial budget tracker that helps you manage your monthly budget and track expenses.
 
 ## Features
